@@ -28,7 +28,7 @@ const ProfileScreen = ({ navigation }) => {
 		<SafeAreaView style={styles.container}>
 			{user.email === undefined ? (
 				<ActivityIndicator
-					size={'Large'}
+					size='large'
 					animating={true}
 					color={MD3Colors.primary40}
 				/>
