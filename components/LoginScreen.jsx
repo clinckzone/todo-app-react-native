@@ -1,5 +1,6 @@
 import { storeTokens } from '../utils/tokens';
-import { useState, useEffect, useCallback } from 'react';
+import { storeUser } from '../utils/users';
+import { useState, useCallback } from 'react';
 import { AntDesign } from '@expo/vector-icons';
 import { SafeAreaView, View, StyleSheet } from 'react-native';
 import { Text, Card, TextInput, Button } from 'react-native-paper';
@@ -30,6 +31,7 @@ const LoginScreen = ({ navigation }) => {
 
 			if (access_token) {
 				storeTokens(access_token, refresh_token);
+				storeUser(email);
 				navigation.navigate('Todos');
 			} else {
 				setError(true);

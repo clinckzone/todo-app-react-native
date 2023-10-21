@@ -6,21 +6,9 @@ export const storeTokens = async (accessToken, refreshToken) => {
 			['accessToken', accessToken],
 			['refreshToken', refreshToken],
 		]);
-	} catch (e) {
-		console.error('Failed to save the tokens: ', e);
+	} catch (error) {
+		console.error('Failed to save tokens: ', error);
 	}
-};
-
-export const checkRefreshToken = async () => {
-	try {
-		const refreshToken = await AsyncStorage.getItem('refreshToken');
-		if (refreshToken !== null) {
-			return true;
-		}
-	} catch (e) {
-		console.error('Failed to fetch the refresh token: ', e);
-	}
-	return false;
 };
 
 export const renewAccessToken = async () => {
@@ -35,12 +23,15 @@ export const renewAccessToken = async () => {
 				headers: { 'Content-Type': 'application/json' },
 			});
 
-			const { access_token, refresh_token} =
-				await response.json();
+			const { access_token, refresh_token } = await response.json();
 
-			if (access_token) storeTokens(access_token, refresh_token);
+			if (access_token) {
+				storeTokens(access_token, refresh_token);
+				return true;
+			}
 		}
 	} catch (error) {
-		console.error('Error fetching data:', error);
+		console.error('Error while fetching refresh token:', error);
 	}
+	return false;
 };
