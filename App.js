@@ -4,6 +4,7 @@ import { renewAccessToken } from './utils/tokens';
 import LoginScreen from './components/LoginScreen';
 import ProfileScreen from './components/ProfileScreen';
 import TodoListScreen from './components/TodoListScreen';
+import CreateTodoScreen from './components/CreateTodoScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { IconButton, ActivityIndicator, MD3Colors } from 'react-native-paper';
@@ -63,6 +64,7 @@ export default function App() {
 						})}
 					/>
 					<Stack.Screen name='Profile' component={ProfileScreen} />
+					<Stack.Screen name='Create Todo' component={CreateTodoScreen}/>
 				</Stack.Navigator>
 			)}
 		</NavigationContainer>

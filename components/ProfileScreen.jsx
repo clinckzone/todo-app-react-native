@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import {
 	Text,
 	Button,
@@ -25,7 +25,13 @@ const ProfileScreen = ({ navigation }) => {
 	}, []);
 
 	return (
-		<SafeAreaView style={styles.container}>
+		<SafeAreaView
+			style={{
+				flex: 1,
+				justifyContent: 'center',
+				padding: 8,
+			}}
+		>
 			{user.email === undefined ? (
 				<ActivityIndicator
 					size='large'
@@ -56,13 +62,5 @@ const ProfileScreen = ({ navigation }) => {
 		</SafeAreaView>
 	);
 };
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		justifyContent: 'center',
-		padding: 8,
-	},
-});
 
 export default ProfileScreen;
