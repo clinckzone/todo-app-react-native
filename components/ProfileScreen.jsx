@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { SafeAreaView, View } from 'react-native';
+import { SafeAreaView, View, StyleSheet } from 'react-native';
 import {
 	Text,
 	Button,
@@ -25,13 +25,7 @@ const ProfileScreen = ({ navigation }) => {
 	}, []);
 
 	return (
-		<SafeAreaView
-			style={{
-				flex: 1,
-				justifyContent: 'center',
-				padding: 8,
-			}}
-		>
+		<SafeAreaView style={styles.container}>
 			{user.email === undefined ? (
 				<ActivityIndicator
 					size='large'
@@ -39,17 +33,17 @@ const ProfileScreen = ({ navigation }) => {
 					color={MD3Colors.primary40}
 				/>
 			) : (
-				<View style={{ alignItems: 'center' }}>
+				<View style={styles.profileContainer}>
 					<Avatar.Image
 						size={100}
-						style={{ marginBottom: 10 }}
+						style={styles.avatar}
 						source={{ uri: user.avatar }}
 					></Avatar.Image>
 					<Text variant='titleLarge'>{user.name}</Text>
 					<Text variant='bodyMedium'>{user.email}</Text>
 					<Button
 						mode={'contained'}
-						style={{ marginTop: 20 }}
+						style={styles.logout}
 						onPress={() => {
 							navigation.navigate('Login');
 							logoutUser();
@@ -64,3 +58,20 @@ const ProfileScreen = ({ navigation }) => {
 };
 
 export default ProfileScreen;
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		justifyContent: 'center',
+		padding: 8,
+	},
+	profileContainer: {
+		alignItems: 'center',
+	},
+	avatar: {
+		marginBottom: 10,
+	},
+	logout: {
+		marginTop: 20,
+	},
+});

@@ -1,5 +1,5 @@
-import { storeTokens } from '../utils/tokens';
 import { storeUser } from '../utils/users';
+import { storeTokens } from '../utils/tokens';
 import { useState, useCallback } from 'react';
 import { AntDesign } from '@expo/vector-icons';
 import { SafeAreaView, View, StyleSheet } from 'react-native';
@@ -11,6 +11,7 @@ import {
 	MD3Colors,
 	ActivityIndicator,
 } from 'react-native-paper';
+import { useFocusEffect } from '@react-navigation/native';
 
 const LoginScreen = ({ navigation }) => {
 	const [email, setEmail] = useState('');
@@ -18,12 +19,14 @@ const LoginScreen = ({ navigation }) => {
 	const [error, setError] = useState(false);
 	const [loading, setLoading] = useState(false);
 
-	const restoreDefaults = useCallback(() => {
-		setEmail('');
-		setPassword('');
-		setLoading(false);
-		setError(false);
-	}, []);
+	useFocusEffect(
+		useCallback(() => {
+			setEmail('');
+			setPassword('');
+			setLoading(false);
+			setError(false);
+		}, [])
+	);
 
 	const fetchUser = useCallback(
 		async (e) => {
@@ -46,7 +49,6 @@ const LoginScreen = ({ navigation }) => {
 				const { access_token, refresh_token } = await response.json();
 
 				if (access_token) {
-					restoreDefaults();
 					storeTokens(access_token, refresh_token);
 					storeUser(email);
 					navigation.navigate('Todos');
@@ -97,12 +99,16 @@ const LoginScreen = ({ navigation }) => {
 							color={MD3Colors.primary40}
 						/>
 					) : (
-						<Button mode='contained' style={styles.button} onPress={fetchUser}>
+						<Button
+							mode='contained'
+							style={styles.loginButton}
+							onPress={fetchUser}
+						>
 							Log In
 						</Button>
 					)}
 					{error ? (
-						<Text variant='labelMedium' style={{ marginTop: 10, color: 'red' }}>
+						<Text variant='labelMedium' style={styles.errorText}>
 							*Either email or password is incorrect
 						</Text>
 					) : null}
@@ -137,7 +143,8 @@ const styles = StyleSheet.create({
 		width: '90%',
 		marginBottom: 20,
 	},
-	button: {
+	loginButton: {
 		borderRadius: 4,
 	},
+	errorText: { marginTop: 10, color: 'red' },
 });
