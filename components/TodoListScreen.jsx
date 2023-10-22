@@ -94,8 +94,18 @@ const TodoListScreen = ({ navigation }) => {
 					todos.map((todo, todoIndex) => {
 						return (
 							<Card key={todo.id} mode='contained' style={styles.todoCard}>
-								<Text variant='titleLarge'>{todo.title}</Text>
-								<Text variant='bodyLarge'>{todo.description}</Text>
+								<Text
+									variant='titleLarge'
+									style={styles.getTodoStatusStyle(todo.status)}
+								>
+									{todo.title}
+								</Text>
+								<Text
+									variant='bodyLarge'
+									style={styles.getTodoStatusStyle(todo.status)}
+								>
+									{todo.description}
+								</Text>
 								{todo.subtasks.map((task, taskIndex) => {
 									return (
 										<View key={taskIndex} style={styles.task}>
@@ -105,7 +115,12 @@ const TodoListScreen = ({ navigation }) => {
 													toggleTaskStatus(todoIndex, taskIndex, task.completed)
 												}
 											/>
-											<Text key={taskIndex}>{task.value}</Text>
+											<Text
+												key={taskIndex}
+												style={styles.getCompletedTaskStyle(task.completed)}
+											>
+												{task.value}
+											</Text>
 										</View>
 									);
 								})}
@@ -167,6 +182,10 @@ const styles = StyleSheet.create({
 	addTodoButton: {
 		marginTop: 20,
 	},
+	getTodoStatusStyle: (status) => {
+		if (status === TodoStatus.COMPLETED)
+			return { textDecorationLine: 'line-through', opacity: 0.5 };
+	},
 	getStatusLabelStyle: (status) => {
 		switch (status) {
 			case TodoStatus.TODO:
@@ -182,5 +201,8 @@ const styles = StyleSheet.create({
 	task: {
 		flexDirection: 'row',
 		alignItems: 'center',
+	},
+	getCompletedTaskStyle: (completed) => {
+		if (completed) return { textDecorationLine: 'line-through', opacity: 0.5 };
 	},
 });
