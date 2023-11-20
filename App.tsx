@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, ScaledSize } from 'react-native';
 import { renewAccessToken } from './utils/tokens';
 import LoginScreen from './components/LoginScreen';
 import ProfileScreen from './components/ProfileScreen';
@@ -32,7 +32,7 @@ export default function App() {
 			{isAuthenticated === null ? (
 				<SafeAreaView style={{ flex: 1, justifyContent: 'center' }}>
 					<ActivityIndicator
-						size={'Large'}
+						size={"large"}
 						animating={true}
 						color={MD3Colors.primary40}
 					/>
